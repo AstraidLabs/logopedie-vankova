@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Logopedická ambulance | Mgr. Zora Vaňková</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #F7F3EC;
+    --warm-white: #FDFAF5;
+    --sage: #7A9E8C;
+    --sage-dark: #4E7563;
+    --sage-light: #C2D9CE;
+    --terracotta: #C4724A;
+    --terracotta-light: #EDD5C5;
+    --ink: #2A2520;
+    --ink-mid: #5C5048;
+    --ink-light: #9C9088;
+    --gold: #BFA060;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--warm-white);
+    color: var(--ink);
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE TEXTURE ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 999;
+    opacity: .025;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 256px;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 4rem;
+    background: rgba(253, 250, 245, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(122, 158, 140, 0.15);
+    transition: box-shadow .3s;
+  }
+  nav.scrolled { box-shadow: 0 4px 32px rgba(42,37,32,.08); }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    font-weight: 600;
+    letter-spacing: .04em;
+    color: var(--ink);
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+  }
+  .nav-logo span {
+    font-weight: 300;
+    font-size: .75rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--sage-dark);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+  .nav-links a {
+    text-decoration: none;
+    color: var(--ink-mid);
+    font-size: .85rem;
+    font-weight: 400;
+    letter-spacing: .05em;
+    transition: color .2s;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -3px; left: 0;
+    width: 0; height: 1px;
+    background: var(--terracotta);
+    transition: width .25s;
+  }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-links a:hover::after { width: 100%; }
+
+  .nav-cta {
+    background: var(--terracotta);
+    color: #fff !important;
+    padding: .55rem 1.4rem;
+    border-radius: 2rem;
+    font-weight: 500 !important;
+    transition: background .2s, transform .15s !important;
+  }
+  .nav-cta::after { display: none !important; }
+  .nav-cta:hover { background: var(--sage-dark) !important; transform: translateY(-1px); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 7rem 4rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg-shape {
+    position: absolute;
+    top: -10%; right: -8%;
+    width: 58%;
+    aspect-ratio: 1;
+    background: radial-gradient(ellipse at 60% 40%, var(--sage-light) 0%, var(--cream) 55%, transparent 80%);
+    border-radius: 40% 60% 55% 45% / 45% 40% 60% 55%;
+    opacity: .65;
+    animation: morphBlob 12s ease-in-out infinite alternate;
+  }
+  @keyframes morphBlob {
+    0%   { border-radius: 40% 60% 55% 45% / 45% 40% 60% 55%; }
+    50%  { border-radius: 55% 45% 40% 60% / 60% 55% 45% 40%; }
+    100% { border-radius: 45% 55% 60% 40% / 40% 60% 55% 45%; }
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    animation: fadeUp .9s ease both;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: .6rem;
+    font-size: .75rem;
+    font-weight: 500;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--sage-dark);
+    margin-bottom: 1.8rem;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    display: block;
+    width: 2rem; height: 1px;
+    background: var(--sage-dark);
+  }
+
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 5.5vw, 5.2rem);
+    font-weight: 300;
+    line-height: 1.1;
+    letter-spacing: -.01em;
+    color: var(--ink);
+    margin-bottom: 1.6rem;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--sage-dark);
+  }
+
+  .hero-desc {
+    font-size: 1rem;
+    line-height: 1.75;
+    color: var(--ink-mid);
+    max-width: 440px;
+    margin-bottom: 2.4rem;
+    font-weight: 300;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: var(--terracotta);
+    color: #fff;
+    padding: .85rem 2rem;
+    border-radius: 3rem;
+    text-decoration: none;
+    font-size: .9rem;
+    font-weight: 500;
+    letter-spacing: .03em;
+    transition: background .2s, transform .15s, box-shadow .2s;
+    box-shadow: 0 4px 20px rgba(196,114,74,.25);
+  }
+  .btn-primary:hover { background: var(--sage-dark); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(78,117,99,.3); }
+
+  .btn-outline {
+    border: 1.5px solid var(--ink);
+    color: var(--ink);
+    padding: .85rem 2rem;
+    border-radius: 3rem;
+    text-decoration: none;
+    font-size: .9rem;
+    font-weight: 400;
+    letter-spacing: .03em;
+    transition: border-color .2s, color .2s, transform .15s;
+  }
+  .btn-outline:hover { border-color: var(--sage-dark); color: var(--sage-dark); transform: translateY(-2px); }
+
+  .hero-visual {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeUp .9s .2s ease both;
+  }
+
+  .hero-illustration {
+    width: 100%;
+    max-width: 480px;
+    position: relative;
+  }
+
+  /* SVG Illustration */
+  .speech-art {
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 24px 64px rgba(78,117,99,.18));
+  }
+
+  .hero-badge {
+    position: absolute;
+    bottom: 2rem; left: -2rem;
+    background: var(--warm-white);
+    border: 1px solid var(--sage-light);
+    border-radius: 1rem;
+    padding: 1rem 1.4rem;
+    box-shadow: 0 8px 32px rgba(42,37,32,.1);
+    display: flex;
+    align-items: center;
+    gap: .8rem;
+    animation: float 4s ease-in-out infinite;
+  }
+  @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+
+  .badge-icon { font-size: 1.6rem; }
+  .badge-text { font-size: .75rem; line-height: 1.4; }
+  .badge-text strong { display: block; font-size: .9rem; color: var(--ink); font-weight: 500; }
+
+  .hero-badge2 {
+    position: absolute;
+    top: 1.5rem; right: -1rem;
+    background: var(--terracotta);
+    color: #fff;
+    border-radius: 1rem;
+    padding: .8rem 1.2rem;
+    font-size: .8rem;
+    font-weight: 500;
+    box-shadow: 0 8px 24px rgba(196,114,74,.3);
+    animation: float 4s 1.5s ease-in-out infinite;
+  }
+
+  /* ── STATS ── */
+  .stats {
+    background: var(--ink);
+    padding: 3.5rem 4rem;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .stats::before {
+    content: '';
+    position: absolute;
+    top: -50%; right: -10%;
+    width: 40%;
+    aspect-ratio: 1;
+    background: radial-gradient(circle, var(--sage-dark) 0%, transparent 65%);
+    opacity: .25;
+  }
+
+  .stat-item { text-align: center; position: relative; z-index: 1; }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3.2rem;
+    font-weight: 300;
+    color: var(--cream);
+    line-height: 1;
+    display: block;
+    margin-bottom: .4rem;
+  }
+  .stat-num span { color: var(--terracotta); }
+  .stat-label { font-size: .8rem; color: var(--ink-light); letter-spacing: .06em; text-transform: uppercase; font-weight: 300; }
+
+  /* ── SECTION BASICS ── */
+  section { padding: 6rem 4rem; }
+  .section-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    font-size: .72rem;
+    font-weight: 500;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--terracotta);
+    margin-bottom: 1rem;
+  }
+  .section-tag::before {
+    content: '';
+    width: 1.5rem; height: 1px;
+    background: var(--terracotta);
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 300;
+    line-height: 1.2;
+    letter-spacing: -.01em;
+    margin-bottom: 1.2rem;
+  }
+  .section-title em { font-style: italic; color: var(--sage-dark); }
+
+  .section-desc {
+    font-size: .95rem;
+    line-height: 1.8;
+    color: var(--ink-mid);
+    font-weight: 300;
+    max-width: 520px;
+  }
+
+  /* ── ABOUT ── */
+  #about {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: center;
+    background: var(--cream);
+  }
+
+  .about-visual {
+    position: relative;
+  }
+
+  .about-portrait {
+    width: 100%;
+    border-radius: 2rem 2rem 8rem 2rem;
+    background: linear-gradient(135deg, var(--sage-light) 0%, var(--sage) 50%, var(--sage-dark) 100%);
+    aspect-ratio: 3/4;
+    max-width: 380px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 32px 80px rgba(78,117,99,.25);
+  }
+
+  .portrait-initials {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 7rem;
+    font-weight: 300;
+    color: rgba(255,255,255,.4);
+    letter-spacing: -.03em;
+  }
+
+  .about-accent {
+    position: absolute;
+    top: 3rem; left: -2rem;
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50%;
+    background: var(--terracotta-light);
+    border: 3px solid var(--cream);
+    box-shadow: 0 8px 24px rgba(196,114,74,.2);
+  }
+
+  .about-line {
+    position: absolute;
+    bottom: -2rem; right: 2rem;
+    width: 4px;
+    height: 6rem;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    border-radius: 2px;
+  }
+
+  .about-quote {
+    background: var(--warm-white);
+    border-left: 3px solid var(--terracotta);
+    border-radius: 0 1rem 1rem 0;
+    padding: 1.2rem 1.5rem;
+    margin-top: 2.5rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    font-style: italic;
+    color: var(--ink-mid);
+    line-height: 1.5;
+    box-shadow: 0 4px 20px rgba(42,37,32,.06);
+  }
+
+  .about-content {}
+  .credentials {
+    display: flex;
+    flex-direction: column;
+    gap: .8rem;
+    margin-top: 2rem;
+  }
+  .credential {
+    display: flex;
+    align-items: center;
+    gap: .8rem;
+    font-size: .88rem;
+    color: var(--ink-mid);
+    font-weight: 300;
+  }
+  .cred-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--sage);
+    flex-shrink: 0;
+  }
+
+  /* ── SERVICES ── */
+  #sluzby { background: var(--warm-white); }
+  .services-header {
+    text-align: center;
+    max-width: 640px;
+    margin: 0 auto 4rem;
+  }
+  .services-header .section-desc { max-width: 100%; }
+
+  .services-tabs {
+    display: flex;
+    justify-content: center;
+    gap: .5rem;
+    margin-bottom: 3rem;
+  }
+  .tab-btn {
+    background: none;
+    border: 1.5px solid var(--sage-light);
+    border-radius: 2rem;
+    padding: .65rem 1.8rem;
+    font-size: .85rem;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    color: var(--ink-mid);
+    transition: all .2s;
+    font-weight: 400;
+  }
+  .tab-btn.active {
+    background: var(--sage-dark);
+    border-color: var(--sage-dark);
+    color: #fff;
+    box-shadow: 0 4px 16px rgba(78,117,99,.3);
+  }
+  .tab-btn:hover:not(.active) { border-color: var(--sage-dark); color: var(--sage-dark); }
+
+  .services-panel { display: none; }
+  .services-panel.active { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+
+  .service-card {
+    background: var(--cream);
+    border-radius: 1.5rem;
+    padding: 2rem;
+    border: 1px solid transparent;
+    transition: border-color .2s, transform .2s, box-shadow .2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--sage), var(--terracotta));
+    opacity: 0;
+    transition: opacity .2s;
+  }
+  .service-card:hover {
+    border-color: var(--sage-light);
+    transform: translateY(-4px);
+    box-shadow: 0 16px 48px rgba(42,37,32,.1);
+  }
+  .service-card:hover::before { opacity: 1; }
+
+  .service-icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    display: block;
+  }
+  .service-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 400;
+    margin-bottom: .6rem;
+    color: var(--ink);
+  }
+  .service-card p {
+    font-size: .85rem;
+    line-height: 1.7;
+    color: var(--ink-mid);
+    font-weight: 300;
+  }
+
+  /* ── PROCESS ── */
+  #postup {
+    background: var(--ink);
+    color: var(--cream);
+    position: relative;
+    overflow: hidden;
+  }
+  #postup::before {
+    content: '';
+    position: absolute;
+    bottom: -20%; left: -10%;
+    width: 50%;
+    aspect-ratio: 1;
+    background: radial-gradient(circle, var(--sage-dark) 0%, transparent 60%);
+    opacity: .2;
+  }
+
+  .process-header { max-width: 540px; margin-bottom: 4rem; }
+  .process-header .section-title { color: var(--cream); }
+  .process-header .section-desc { color: var(--ink-light); max-width: 100%; }
+
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .process-steps::before {
+    content: '';
+    position: absolute;
+    top: 2.8rem; left: 12%;
+    right: 12%;
+    height: 1px;
+    background: linear-gradient(90deg, var(--sage-dark), var(--terracotta), var(--sage-dark));
+    opacity: .4;
+  }
+
+  .step {
+    text-align: center;
+    position: relative;
+  }
+  .step-num {
+    width: 5.5rem; height: 5.5rem;
+    border-radius: 50%;
+    background: rgba(122,158,140,.15);
+    border: 1.5px solid var(--sage-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    font-weight: 300;
+    color: var(--sage-light);
+    transition: background .3s;
+  }
+  .step:hover .step-num { background: rgba(122,158,140,.3); }
+
+  .step h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-weight: 400;
+    margin-bottom: .5rem;
+    color: var(--cream);
+  }
+  .step p {
+    font-size: .82rem;
+    line-height: 1.7;
+    color: var(--ink-light);
+    font-weight: 300;
+  }
+
+  /* ── TESTIMONIALS ── */
+  #reference {
+    background: var(--cream);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 3.5rem;
+  }
+
+  .testimonial {
+    background: var(--warm-white);
+    border-radius: 1.5rem;
+    padding: 2rem;
+    border: 1px solid rgba(122,158,140,.15);
+    transition: box-shadow .2s, transform .2s;
+  }
+  .testimonial:hover { box-shadow: 0 12px 40px rgba(42,37,32,.09); transform: translateY(-3px); }
+
+  .testimonial-stars { color: var(--gold); font-size: 1rem; margin-bottom: 1rem; letter-spacing: .1em; }
+  .testimonial-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-style: italic;
+    line-height: 1.6;
+    color: var(--ink);
+    margin-bottom: 1.5rem;
+    font-weight: 300;
+  }
+  .testimonial-author { font-size: .8rem; color: var(--ink-light); font-weight: 400; letter-spacing: .05em; }
+  .testimonial-author strong { display: block; color: var(--ink-mid); font-weight: 500; font-size: .85rem; margin-bottom: .15rem; }
+
+  /* ── CONTACT ── */
+  #kontakt {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: start;
+    background: var(--warm-white);
+  }
+
+  .contact-info {}
+  .contact-items { margin-top: 2.5rem; display: flex; flex-direction: column; gap: 1.5rem; }
+  .contact-item {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+  .contact-item-icon {
+    width: 2.8rem; height: 2.8rem;
+    border-radius: .8rem;
+    background: var(--sage-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+  .contact-item-text { font-size: .9rem; line-height: 1.6; }
+  .contact-item-text strong { display: block; font-weight: 500; color: var(--ink); margin-bottom: .2rem; font-size: .8rem; text-transform: uppercase; letter-spacing: .06em; }
+  .contact-item-text a { color: var(--ink-mid); text-decoration: none; transition: color .2s; }
+  .contact-item-text a:hover { color: var(--sage-dark); }
+
+  .contact-hours {
+    margin-top: 2rem;
+    background: var(--cream);
+    border-radius: 1.2rem;
+    padding: 1.5rem;
+    border: 1px solid rgba(122,158,140,.15);
+  }
+  .hours-title {
+    font-size: .75rem;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    color: var(--sage-dark);
+    font-weight: 500;
+    margin-bottom: 1rem;
+  }
+  .hours-row { display: flex; justify-content: space-between; font-size: .85rem; padding: .4rem 0; border-bottom: 1px solid rgba(42,37,32,.06); color: var(--ink-mid); font-weight: 300; }
+  .hours-row:last-child { border-bottom: none; }
+  .hours-row span { color: var(--ink); font-weight: 400; }
+
+  /* FORM */
+  .contact-form-wrap {}
+  .contact-form-wrap h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    font-weight: 300;
+    margin-bottom: .5rem;
+  }
+  .contact-form-wrap p {
+    font-size: .88rem;
+    color: var(--ink-mid);
+    margin-bottom: 2rem;
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  .form-group { margin-bottom: 1.2rem; }
+  .form-group label {
+    display: block;
+    font-size: .78rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: .07em;
+    color: var(--ink-mid);
+    margin-bottom: .5rem;
+  }
+  .form-group input, .form-group select, .form-group textarea {
+    width: 100%;
+    padding: .85rem 1.1rem;
+    border: 1.5px solid var(--sage-light);
+    border-radius: .8rem;
+    background: var(--cream);
+    font-family: 'DM Sans', sans-serif;
+    font-size: .9rem;
+    color: var(--ink);
+    transition: border-color .2s, box-shadow .2s;
+    outline: none;
+    appearance: none;
+  }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+    border-color: var(--sage-dark);
+    box-shadow: 0 0 0 3px rgba(78,117,99,.12);
+  }
+  .form-group textarea { resize: vertical; min-height: 110px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+  .form-submit {
+    background: var(--terracotta);
+    color: #fff;
+    border: none;
+    padding: 1rem 2.5rem;
+    border-radius: 3rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .9rem;
+    font-weight: 500;
+    cursor: pointer;
+    width: 100%;
+    transition: background .2s, transform .15s, box-shadow .2s;
+    box-shadow: 0 4px 20px rgba(196,114,74,.25);
+    margin-top: .5rem;
+  }
+  .form-submit:hover { background: var(--sage-dark); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(78,117,99,.3); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--ink);
+    color: var(--ink-light);
+    padding: 3rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--cream);
+    font-size: 1.2rem;
+    font-weight: 300;
+  }
+  .footer-logo small { display: block; font-size: .7rem; letter-spacing: .1em; color: var(--ink-light); font-family: 'DM Sans', sans-serif; margin-top: .2rem; text-transform: uppercase; }
+  footer p { font-size: .78rem; font-weight: 300; }
+  .footer-links { display: flex; gap: 1.5rem; }
+  .footer-links a { color: var(--ink-light); text-decoration: none; font-size: .78rem; transition: color .2s; }
+  .footer-links a:hover { color: var(--cream); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity .7s ease, transform .7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1024px) {
+    .hero, #about, #kontakt { grid-template-columns: 1fr; }
+    .hero { padding-top: 8rem; }
+    .hero-visual { display: none; }
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .services-panel.active, .process-steps, .testimonials-grid { grid-template-columns: 1fr 1fr; }
+    nav { padding: 1.2rem 2rem; }
+    section { padding: 4rem 2rem; }
+    .stats { padding: 3rem 2rem; }
+    footer { padding: 2rem; flex-direction: column; align-items: flex-start; }
+    #about { gap: 3rem; }
+    #kontakt { gap: 3rem; }
+  }
+
+  @media (max-width: 640px) {
+    .services-panel.active, .process-steps, .testimonials-grid { grid-template-columns: 1fr; }
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .nav-links { display: none; }
+    .form-row { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 2.5rem; }
+  }
+
+  /* ── SUCCESS MESSAGE ── */
+  .form-success {
+    display: none;
+    background: var(--sage-light);
+    border-radius: 1rem;
+    padding: 2rem;
+    text-align: center;
+    color: var(--sage-dark);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 400;
+    font-style: italic;
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a href="#" class="nav-logo">
+    Mgr. Zora Vaňková
+    <span>Logopedická ambulance</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#o-mne">O mně</a></li>
+    <li><a href="#sluzby">Služby</a></li>
+    <li><a href="#postup">Průběh péče</a></li>
+    <li><a href="#reference">Reference</a></li>
+    <li><a href="#kontakt" class="nav-cta">Objednat se</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-shape"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Logopedická péče pro děti i dospělé</div>
+    <h1>Najdeme váš<br><em>hlas</em> společně</h1>
+    <p class="hero-desc">
+      Soukromá logopedická ambulance v Praze. Individuální přístup, odborná péče a prostředí plné porozumění — pro každého, kdo chce komunikovat s jistotou.
+    </p>
+    <div class="hero-actions">
+      <a href="#kontakt" class="btn-primary">Objednat se →</a>
+      <a href="#o-mne" class="btn-outline">Více o ambulanci</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-illustration">
+      <svg class="speech-art" viewBox="0 0 480 520" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Background circle -->
+        <circle cx="240" cy="260" r="220" fill="#C2D9CE" fill-opacity=".35"/>
+        <!-- Main face/head -->
+        <ellipse cx="240" cy="210" rx="110" ry="130" fill="#EDD5C5"/>
+        <!-- Hair -->
+        <ellipse cx="240" cy="120" rx="115" ry="70" fill="#5C5048"/>
+        <ellipse cx="155" cy="170" rx="30" ry="60" fill="#5C5048"/>
+        <ellipse cx="325" cy="170" rx="30" ry="60" fill="#5C5048"/>
+        <!-- Eyes -->
+        <ellipse cx="205" cy="200" rx="14" ry="16" fill="#2A2520"/>
+        <ellipse cx="275" cy="200" rx="14" ry="16" fill="#2A2520"/>
+        <circle cx="210" cy="196" r="4" fill="white"/>
+        <circle cx="280" cy="196" r="4" fill="white"/>
+        <!-- Smile -->
+        <path d="M210 240 Q240 268 270 240" stroke="#C4724A" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+        <!-- Neck -->
+        <rect x="215" y="330" width="50" height="40" rx="8" fill="#EDD5C5"/>
+        <!-- Body -->
+        <path d="M140 370 Q140 420 180 430 L300 430 Q340 420 340 370 Q310 350 240 350 Q170 350 140 370Z" fill="#4E7563"/>
+        <!-- Speech bubble 1 -->
+        <rect x="310" y="120" width="130" height="65" rx="18" fill="white" opacity=".9"/>
+        <path d="M320 185 L300 200 L330 185" fill="white" opacity=".9"/>
+        <text x="325" y="148" font-family="Cormorant Garamond, serif" font-size="14" fill="#4E7563" font-style="italic">Výborně!</text>
+        <text x="325" y="168" font-family="DM Sans, sans-serif" font-size="11" fill="#9C9088">Skvělá práce 🎉</text>
+        <!-- Speech bubble 2 small -->
+        <rect x="40" y="160" width="90" height="45" rx="12" fill="#BFA060" opacity=".8"/>
+        <path d="M120 200 L140 215 L110 200" fill="#BFA060" opacity=".8"/>
+        <text x="55" y="182" font-family="DM Sans, sans-serif" font-size="11" fill="white">Řekneme to</text>
+        <text x="55" y="198" font-family="DM Sans, sans-serif" font-size="11" fill="white">spolu ✨</text>
+        <!-- Sound waves -->
+        <path d="M370 260 Q380 250 370 240" stroke="#C4724A" stroke-width="2.5" stroke-linecap="round" fill="none" opacity=".6"/>
+        <path d="M382 270 Q398 255 382 235" stroke="#C4724A" stroke-width="2.5" stroke-linecap="round" fill="none" opacity=".45"/>
+        <path d="M394 280 Q416 258 394 228" stroke="#C4724A" stroke-width="2.5" stroke-linecap="round" fill="none" opacity=".3"/>
+        <!-- Stars -->
+        <text x="90" y="320" font-size="20" opacity=".4">⭐</text>
+        <text x="360" y="380" font-size="16" opacity=".35">✦</text>
+        <text x="160" y="470" font-size="14" opacity=".3">◦</text>
+      </svg>
+      <div class="hero-badge">
+        <div class="badge-icon">🎓</div>
+        <div class="badge-text">
+          <strong>15+ let praxe</strong>
+          Certifikovaná logopedka
+        </div>
+      </div>
+      <div class="hero-badge2">👶 Děti &amp; 👩 Dospělí</div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat-item reveal">
+    <span class="stat-num">15<span>+</span></span>
+    <div class="stat-label">Let klinické praxe</div>
+  </div>
+  <div class="stat-item reveal" style="transition-delay:.1s">
+    <span class="stat-num">800<span>+</span></span>
+    <div class="stat-label">Spokojených klientů</div>
+  </div>
+  <div class="stat-item reveal" style="transition-delay:.2s">
+    <span class="stat-num">2</span>
+    <div class="stat-label">Věkové skupiny</div>
+  </div>
+  <div class="stat-item reveal" style="transition-delay:.3s">
+    <span class="stat-num">98<span>%</span></span>
+    <div class="stat-label">Míra spokojenosti</div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="o-mne">
+  <div class="about-visual reveal">
+    <div class="about-portrait">
+      <span class="portrait-initials">ZV</span>
+    </div>
+    <div class="about-accent"></div>
+    <div class="about-line"></div>
+    <div class="about-quote">
+      „Každý člověk má svůj jedinečný příběh a svůj vlastní hlas. Mým posláním je pomoci vám ho najít."
+    </div>
+  </div>
+  <div class="about-content reveal" style="transition-delay:.15s">
+    <div class="section-tag">O ambulanci</div>
+    <h2 class="section-title">Mgr. Zora <em>Vaňková</em></h2>
+    <p class="section-desc" style="max-width:100%;margin-bottom:1rem">
+      Jsem klinická logopedka s více než 15 lety zkušeností v diagnostice a terapii komunikačních obtíží u dětí i dospělých. Věřím, že každý člověk má právo komunikovat svobodně a bez bariér.
+    </p>
+    <p class="section-desc" style="max-width:100%">
+      Ve své soukromé ambulanci kladu důraz na individuální přístup, laskavé prostředí a terapii postavenou na nejnovějších vědecky ověřených metodách. Spolupracuji s rodinami, pediatry i neurologickými pracovišti.
+    </p>
+    <div class="credentials">
+      <div class="credential"><div class="cred-dot"></div>Magisterský titul v oboru Logopedie, Univerzita Karlova v Praze</div>
+      <div class="credential"><div class="cred-dot"></div>Atestace z klinické logopedie, Ministerstvo zdravotnictví ČR</div>
+      <div class="credential"><div class="cred-dot"></div>Certifikát Orton-Gillingham pro dyslexii a SPU</div>
+      <div class="credential"><div class="cred-dot"></div>Výcvik v AAK (augmentativní a alternativní komunikace)</div>
+      <div class="credential"><div class="cred-dot"></div>Člen České asociace klinických logopedů</div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="sluzby">
+  <div class="services-header reveal">
+    <div class="section-tag">Nabídka péče</div>
+    <h2 class="section-title">Čím vám mohu <em>pomoci?</em></h2>
+    <p class="section-desc">Nabízím komplexní logopedickou péči přizpůsobenou věku a potřebám každého klienta — od kojenců po seniory.</p>
+  </div>
+  <div class="services-tabs reveal">
+    <button class="tab-btn active" onclick="switchTab('deti', this)">👶 Pro děti</button>
+    <button class="tab-btn" onclick="switchTab('dospeli', this)">👩 Pro dospělé</button>
+  </div>
+
+  <div id="panel-deti" class="services-panel active">
+    <div class="service-card reveal">
+      <span class="service-icon">🗣️</span>
+      <h3>Opožděný vývoj řeči</h3>
+      <p>Diagnostika a terapie u dětí, které začínají mluvit později nebo jejichž řeč se nevyvíjí dle věkové normy.</p>
+    </div>
+    <div class="service-card reveal" style="transition-delay:.07s">
+      <span class="service-icon">🔤</span>
+      <h3>Dyslalie (patlavost)</h3>
+      <p>Cílená terapie nesprávné výslovnosti hlásek — R, Ř, sykavky a dalších — pomocí moderních metod.</p>
+    </div>
+    <div class="service-card reveal" style="transition-delay:.14s">
+      <span class="service-icon">📖</span>
+      <h3>Dyslexie a SPU</h3>
+      <p>Podpora dětí se specifickými poruchami učení — dyslexie, dysgrafie, dysortografie. Spolupráce s pedagogy.</p>
+    </div>
+    <div class="service-card reveal" style="transition-delay:.21s">
+      <span class="service-icon">🌊</span>
+      <h3>Koktavost (balbuties)</h3>
+      <p>Komplexní terapie plynulosti řeči zaměřená na techniku, dýchání a psychologickou pohodu dítěte.</p>
+    </div>
+    <div class="service-card reveal" style="transition-delay:.28s">
+      <span class="service-icon">👂</span>
+      <h3>Sluchové poruchy</h3>
+      <p>Logopedie pro děti se sluchovým postižením, uživatele kochleárního implantátu a naslouchadel.</p>
+    </div>
+    <div class="service-card reveal" style="transition-delay:.35s">
+      <span class="service-icon">💬</span>
+      <h3>Autismus & AAK</h3>
+      <p>Terapie komunikačních obtíží u dětí s poruchou autistického spektra a zavedení alternativní komunikace.</p>
+    </div>
+  </div>
+
+  <div id="panel-dospeli" class="services-panel">
+    <div class="service-card reveal">
+      <span class="service-icon">🧠</span>
+      <h3>Afázie po CMP</h3>
+      <p>Rehabilitace řeči a jazyka po cévní mozkové příhodě — obnova komunikačních schopností krok za krokem.</p>
+    </div>
+    <div class="service-card reveal" style="transition-delay:.07s">
+      <span class="service-icon">🎤</span>
+      <h3>Hlas a hlasová hygiena</h3>
+      <p>Terapie hlasových poruch (dysfonie, chrapot), hlasová rehabilitace pro pedagogické a umělecké profese.</p>
+    </div>
+    <div class="service-card reveal" style="transition-delay:.14s">
+      <span class="service-icon">🌊</span>
+      <h3>Koktavost u dospělých</h3>
+      <p>Moderní přístup k terapii koktavosti zahrnující techniky plynulosti, kognitivní a emocionální složku.</p>
+    </div>
+    <div class="service-card reveal" style="transition-delay:.21s">
+      <span class="service-icon">🍽️</span>
+      <h3>Polykací obtíže</h3>
+      <p>Diagnostika a terapie dysfagie po neurologických onemocněních, úrazech nebo onkologické léčbě.</p>
+    </div>
+    <div class="service-card reveal" style="transition-delay:.28s">
+      <span class="service-icon">🎙️</span>
+      <h3>Přízvuk & rétorika</h3>
+      <p>Práce s cizincem mluvícím česky nebo korekce přízvuku a rétorika pro profesionální prezentace.</p>
+    </div>
+    <div class="service-card reveal" style="transition-delay:.35s">
+      <span class="service-icon">🧩</span>
+      <h3>Neurodegenerativní onemocnění</h3>
+      <p>Logopedie pro klienty s Parkinsonovou chorobou, RS a jinými progresivními neurologickými diagnózami.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="postup">
+  <div class="process-header reveal">
+    <div class="section-tag" style="color:var(--sage-light)">Jak to funguje</div>
+    <h2 class="section-title">Průběh <em>logopedické péče</em></h2>
+    <p class="section-desc">Každá terapie začíná podrobnou diagnostikou a individuálním plánem. Váš pokrok sledujeme průběžně a postup přizpůsobujeme vašim potřebám.</p>
+  </div>
+  <div class="process-steps">
+    <div class="step reveal">
+      <div class="step-num">1</div>
+      <h3>Vstupní konzultace</h3>
+      <p>Bezplatná 30minutová konzultace — zjistíme vaše potřeby a odpovíme na vaše otázky.</p>
+    </div>
+    <div class="step reveal" style="transition-delay:.1s">
+      <div class="step-num">2</div>
+      <h3>Komplexní diagnostika</h3>
+      <p>Podrobné vyšetření řeči, jazyka, hlasu a komunikačních schopností pomocí standardizovaných testů.</p>
+    </div>
+    <div class="step reveal" style="transition-delay:.2s">
+      <div class="step-num">3</div>
+      <h3>Individuální plán</h3>
+      <p>Sestavíme terapeutický plán šitý na míru s jasnými cíli, časovým harmonogramem a domácím cvičením.</p>
+    </div>
+    <div class="step reveal" style="transition-delay:.3s">
+      <div class="step-num">4</div>
+      <h3>Terapie & hodnocení</h3>
+      <p>Pravidelné sezení (45–60 min) s průběžným hodnocením pokroku a úpravou plánu dle potřeby.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="reference">
+  <div class="section-tag reveal">Reference</div>
+  <h2 class="section-title reveal">Co říkají <em>naši klienti</em></h2>
+  <div class="testimonials-grid">
+    <div class="testimonial reveal">
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-text">„Paní magistra Vaňková je výjimečná logopedka. Syn začal mluvit výrazně lépe již po dvou měsících terapie. Přístup je laskavý a profesionální zároveň."</p>
+      <div class="testimonial-author"><strong>Markéta H.</strong>matka 4letého syna</div>
+    </div>
+    <div class="testimonial reveal" style="transition-delay:.1s">
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-text">„Po mrtvici jsem měl velké potíže s řečí. Díky systematické terapii jsem dnes schopný normálně komunikovat. Nemohu dostatečně poděkovat."</p>
+      <div class="testimonial-author"><strong>Ing. Petr N.</strong>dospělý klient po CMP</div>
+    </div>
+    <div class="testimonial reveal" style="transition-delay:.2s">
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-text">„Dcera trpěla koktavostí a byla z toho nešťastná. Po půl roce u paní Vaňkové je z ní sebevědomá dívka, která se nebojí mluvit."</p>
+      <div class="testimonial-author"><strong>Lenka P.</strong>matka 9leté dcery</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="kontakt">
+  <div class="contact-info reveal">
+    <div class="section-tag">Kontakt</div>
+    <h2 class="section-title">Pojďme <em>začít</em></h2>
+    <p class="section-desc">Objednejte se na bezplatnou vstupní konzultaci nebo nás kontaktujte s jakýmkoliv dotazem. Jsme tu pro vás.</p>
+    <div class="contact-items">
+      <div class="contact-item">
+        <div class="contact-item-icon">📍</div>
+        <div class="contact-item-text">
+          <strong>Adresa</strong>
+          Mánesova 28, 120 00 Praha 2<br>
+          <small style="color:var(--ink-light);font-size:.78rem">3. patro, výtah k dispozici</small>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-icon">📞</div>
+        <div class="contact-item-text">
+          <strong>Telefon</strong>
+          <a href="tel:+420777123456">+420 777 123 456</a>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-icon">✉️</div>
+        <div class="contact-item-text">
+          <strong>E-mail</strong>
+          <a href="mailto:info@logopedie-vankova.cz">info@logopedie-vankova.cz</a>
+        </div>
+      </div>
+    </div>
+    <div class="contact-hours">
+      <div class="hours-title">Ordinační hodiny</div>
+      <div class="hours-row">Pondělí <span>8:00 – 17:00</span></div>
+      <div class="hours-row">Úterý <span>8:00 – 18:00</span></div>
+      <div class="hours-row">Středa <span>10:00 – 19:00</span></div>
+      <div class="hours-row">Čtvrtek <span>8:00 – 17:00</span></div>
+      <div class="hours-row">Pátek <span>8:00 – 14:00</span></div>
+      <div class="hours-row" style="color:var(--ink-light)">So–Ne <span style="color:var(--ink-light)">Zavřeno</span></div>
+    </div>
+  </div>
+
+  <div class="contact-form-wrap reveal" style="transition-delay:.15s">
+    <h3>Napište nám</h3>
+    <p>Vyplňte formulář a ozveme se vám do 24 hodin pro potvrzení termínu.</p>
+    <form id="contactForm">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Jméno a příjmení*</label>
+          <input type="text" placeholder="Jana Nováková" required>
+        </div>
+        <div class="form-group">
+          <label>Telefon*</label>
+          <input type="tel" placeholder="+420 xxx xxx xxx" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>E-mail*</label>
+        <input type="email" placeholder="vas@email.cz" required>
+      </div>
+      <div class="form-group">
+        <label>Koho objednáváte?</label>
+        <select>
+          <option value="">Vyberte...</option>
+          <option>Dítě (0–6 let)</option>
+          <option>Dítě (7–15 let)</option>
+          <option>Dospělého</option>
+          <option>Seniora</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Stručný popis obtíží</label>
+        <textarea placeholder="Krátce popište, s čím potřebujete pomoci..."></textarea>
+      </div>
+      <button type="submit" class="form-submit">Odeslat poptávku →</button>
+    </form>
+    <div class="form-success" id="formSuccess">
+      ✨ Děkujeme! Vaše zpráva byla odeslána.<br>
+      <small style="font-family:'DM Sans',sans-serif;font-size:.85rem;font-style:normal;color:var(--ink-mid)">Ozveme se vám do 24 hodin.</small>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">
+    Mgr. Zora Vaňková
+    <small>Logopedická ambulance</small>
+  </div>
+  <p>© 2025 Logopedická ambulance Vaňková. Všechna práva vyhrazena.</p>
+  <div class="footer-links">
+    <a href="#">Ochrana osobních údajů</a>
+    <a href="#">Podmínky</a>
+    <a href="#kontakt">Kontakt</a>
+  </div>
+</footer>
+
+<script>
+  // Nav scroll effect
+  const nav = document.getElementById('mainNav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  // Intersection observer for reveal animations
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  reveals.forEach(el => observer.observe(el));
+
+  // Tabs
+  function switchTab(id, btn) {
+    document.querySelectorAll('.services-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('panel-' + id).classList.add('active');
+    btn.classList.add('active');
+    // Re-trigger reveals in new panel
+    document.querySelectorAll('#panel-' + id + ' .reveal').forEach(el => {
+      el.classList.remove('visible');
+      setTimeout(() => el.classList.add('visible'), 50);
+    });
+  }
+
+  // Form submit
+  document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    this.style.display = 'none';
+    document.getElementById('formSuccess').style.display = 'block';
+  });
+</script>
+</body>
+</html>
